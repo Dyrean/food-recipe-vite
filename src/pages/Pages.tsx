@@ -6,7 +6,7 @@ import Cuisine from "./Cuisine";
 import Searched from "./Searched";
 import Recipe from "./Recipe";
 
-function Pages() {
+export default function Pages() {
   const location = useLocation();
   return (
     <AnimatePresence exitBeforeEnter>
@@ -19,5 +19,3 @@ function Pages() {
     </AnimatePresence>
   );
 }
-
-export default Pages;

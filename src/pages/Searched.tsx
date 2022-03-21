@@ -2,23 +2,15 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { Link, useParams } from "react-router-dom";
+import { getSearched } from "../utils/getSearched";
 
-export function Searched() {
+export default function Searched() {
   const [recipes, setRecipes] = useState([]);
   const { search } = useParams();
 
   useEffect(() => {
     getSearched(search!).then((data) => setRecipes(data));
   }, [search]);
-
-  const getSearched = async (query: string) => {
-    const data = await fetch(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${
-        import.meta.env.VITE_SPOONACULAR_KEY
-      }&query=${query}`
-    ).then((response) => response.json());
-    return data.results;
-  };
 
   return (
     <Grid
@@ -61,5 +53,3 @@ const Card = styled.div`
     padding: 1rem;
   }
 `;
-
-export default Searched;

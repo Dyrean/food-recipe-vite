@@ -2,7 +2,7 @@ import Veggie from "../components/Veggie";
 import Popular from "../components/Popular";
 import { motion } from "framer-motion";
 
-function Home() {
+export default function Home() {
   return (
     <motion.div
       animate={{ opacity: 1 }}
@@ -15,5 +15,3 @@ function Home() {
     </motion.div>
   );
 }
-
-export default Home;

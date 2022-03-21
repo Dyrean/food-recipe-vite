@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/splide/dist/css/splide.min.css";
+import { getPopular } from "../utils/getPopular";
 
 function Popular() {
   const [popular, setPopular] = useState([]);
@@ -11,49 +12,34 @@ function Popular() {
     getPopular().then((data) => setPopular(data));
   }, []);
 
-  const getPopular = async () => {
-    const check = localStorage.getItem("popular");
-    if (check) return JSON.parse(check);
-
-    const data = await fetch(
-      `https://api.spoonacular.com/recipes/random?apiKey=${
-        import.meta.env.VITE_SPOONACULAR_KEY
-      }&number=10`
-    ).then((response) => response.json());
-    localStorage.setItem("popular", JSON.stringify(data.recipes));
-    return data.recipes;
-  };
-
   return (
-    <div>
-      <Wrapper>
-        <h3>Popular Picks</h3>
-        <Splide
-          options={{
-            perPage: 4,
-            arrows: false,
-            pagination: false,
-            drag: "free",
-            gap: "5rem",
-          }}
-        >
-          {!!popular &&
-            popular.map((recipe: any) => {
-              return (
-                <SplideSlide key={recipe.id}>
-                  <Card>
-                    <Link to={`/recipe/${recipe.id}`}>
-                      <p>{recipe.title}</p>
-                      <img src={recipe.image} alt={recipe.title} />
-                      <Gradient />
-                    </Link>
-                  </Card>
-                </SplideSlide>
-              );
-            })}
-        </Splide>
-      </Wrapper>
-    </div>
+    <Wrapper>
+      <h3>Popular Picks</h3>
+      <Splide
+        options={{
+          perPage: 4,
+          arrows: false,
+          pagination: false,
+          drag: "free",
+          gap: "5rem",
+        }}
+      >
+        {!!popular &&
+          popular.map((recipe: any) => {
+            return (
+              <SplideSlide key={recipe.id}>
+                <Card>
+                  <Link to={`/recipe/${recipe.id}`}>
+                    <p>{recipe.title}</p>
+                    <img src={recipe.image} alt={recipe.title} />
+                    <Gradient />
+                  </Link>
+                </Card>
+              </SplideSlide>
+            );
+          })}
+      </Splide>
+    </Wrapper>
   );
 }
 
